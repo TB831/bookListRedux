@@ -2,12 +2,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { selectBook } from '../actions/index.js';
-import { bindActionCreaters } from 'redux';
+import { bindActionCreators } from 'redux';
 
 class BookList extends Component {
   renderList() {
     return this.props.books.map(book => {
-      return <li key={book.title} className='list-group-item'>{book.title}</li>
+      return <li
+        key={book.title}
+        onClick={() => this.props.selectBook(book)}
+        className='list-group-item'>
+        {book.title
+        }</li>
     })
   }
   render() {
@@ -27,7 +32,7 @@ const mapStateToProps = (state) => { // Takes are application state as an argume
 
 // Anything returned from this function will end up as props on the BookList container
 const mapDispactToProps = (dispatch) => { // Whenever select book is called, the result should be passed to all our reducers
-  return bindActionCreaters({selectBook: selectBook}, dispatch)
+  return bindActionCreators({selectBook: selectBook}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispactToProps)(BookList);  // Returns a smart component(BookList)/ Container
